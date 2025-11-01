@@ -1,0 +1,34 @@
+dataset:
+  repo_id: DragonHu/remove_red_block_from_plate_lerobot_smolvla_mujoco # Repository ID
+  root: ./demo_data_language # Your root for data file!
+policy:
+  type : smolvla
+  chunk_size: 5
+  n_action_steps: 5
+  device: cuda
+  repo_id: null  # 或者设置为空字符串 ""
+  push_to_hub: false  # 禁用推送功能
+  
+save_checkpoint: true
+output_dir: ./ckpt/smolvla_omy # Save directory
+batch_size: 16
+# batch_size: 48
+job_name : lerobot_smolvla_remove_block
+resume: false 
+seed : 42
+# num_workers: 8
+num_workers: 16
+steps: 20_000
+# steps: 5_000
+eval_freq: -1 # No evaluation
+log_freq: 50
+save_checkpoint: true
+save_freq: 10_000
+# save_freq: 1_000
+use_policy_training_preset: true
+  
+wandb:
+  enable: true # wandb 记录日志
+  project: lerobot_smolvla_remove_block_random_uniform
+  entity: wenxuan-hu97-centralesup-lec
+  disable_artifact: true

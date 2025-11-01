@@ -1,0 +1,60 @@
+<mujoco model="Scanned Objects">
+    <!-- Memory? -->
+    <size memory="500M"/>
+    
+    <!-- Default options -->
+    <option timestep="0.002" />
+	<option gravity="0 0 -9.81" />
+    <!-- <compiler angle="radian" assetdir="./tabletop/mesh" autolimits="true" /> -->
+    <option integrator="RK4" noslip_iterations="20" cone="elliptic" impratio="10" tolerance="1e-10" jacobian="sparse" solver="Newton" timestep="0.002" gravity="0 0 -9.81" />
+    <default>
+        <joint armature="0.1" damping="0.1" />
+        <default class="visual_only">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="no_visual_collision">
+            <!-- visual group of 'collision' should be 3 to not render -->
+            <geom type="capsule" solimp=".9 .99 .001" solref=".015 1" group="3" />
+        </default>
+        <default class="visual_collision">
+            <geom type="mesh" solimp=".9 .99 .001" solref=".015 1" group="2" />
+        </default>
+    </default>
+    
+    <!-- Assets -->
+    <!-- block position: pos="0.32 0.1 0.83" -->
+    <asset>
+
+    </asset>
+    
+    <!-- Sky and floor -->
+    <include file="tabletop/object/floor_isaac_style.xml" />
+
+    <!-- Table -->
+    <include file="tabletop/object/object_table.xml" />
+    
+    <!-- UR52 -->
+
+    <!-- <include file="so100_6dof/so100.xml" /> -->
+    <include file="./robotis_omy/omy.xml" />
+    <include file="objaverse/plate_11/model_new.xml"/>
+    <include file="./objaverse/mug_6/model_new.xml"/>
+    <!-- <include file="./objaverse/mug_5/model_new.xml"/> -->
+    <include file="./red_block.xml"/>
+    
+    <!-- Objects -->
+    <worldbody>
+        <!-- red block is included at top-level; nothing needed here -->
+        
+        <!-- <body name="body_obj_block_red" pos="0.3 -0.25 0.84">
+            <freejoint name="body_obj_block_red" />
+            <inertial pos="0 0 0" mass="0.3" diaginertia="0.0001 0.0001 0.0001" />
+            <geom solimp="0.9 0.9 0.001" solref="0.001 1" friction="3 2 2" condim="4" 
+            pos="0 0 0" size="0.015 0.015 0.015" type="box" name="body_obj_block_red" rgba="0.5 0 0 1" priority="1" />
+        </body> -->
+
+    </worldbody>
+
+    
+
+</mujoco>

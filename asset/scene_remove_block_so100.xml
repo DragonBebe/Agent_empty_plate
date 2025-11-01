@@ -1,0 +1,46 @@
+<mujoco model="Scanned Objects SO100">
+    <!-- Memory? -->
+    <size memory="500M"/>
+    
+    <!-- Default options -->
+    <option timestep="0.002" />
+    <option gravity="0 0 -9.81" />
+    <!-- <compiler angle="radian" assetdir="./tabletop/mesh" autolimits="true" /> -->
+    <option integrator="RK4" noslip_iterations="20" cone="elliptic" impratio="10" tolerance="1e-10" jacobian="sparse" solver="Newton" timestep="0.002" gravity="0 0 -9.81" />
+    <default>
+        <joint armature="0.1" damping="0.1" />
+        <default class="visual_only">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="no_visual_collision">
+            <!-- visual group of 'collision' should be 3 to not render -->
+            <geom type="capsule" solimp=".9 .99 .001" solref=".015 1" group="3" />
+        </default>
+        <default class="visual_collision">
+            <geom type="mesh" solimp=".9 .99 .001" solref=".015 1" group="2" />
+        </default>
+    </default>
+    
+    <!-- Assets -->
+    <asset>
+    </asset>
+    
+    <!-- Sky and floor -->
+    <include file="tabletop/object/floor_isaac_style.xml" />
+
+    <!-- Table -->
+    <include file="tabletop/object/object_table.xml" />
+    
+    <!-- SO100 Robot -->
+    <include file="so100_6dof/so100.xml" />
+
+    <!-- Task objects -->
+    <include file="objaverse/plate_11/model_new.xml"/>
+    <include file="objaverse/mug_6/model_new.xml"/>
+    <include file="red_block.xml"/>
+    
+    <!-- Objects -->
+    <worldbody>
+        <!-- Objects are defined in the included files -->
+    </worldbody>
+</mujoco>

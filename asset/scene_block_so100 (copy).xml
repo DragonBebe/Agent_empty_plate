@@ -1,0 +1,99 @@
+<mujoco model="Scanned Objects">
+    <!-- Memory? -->
+    <size memory="500M"/>
+    
+    <!-- Default options -->
+    <!-- <compiler angle="radian" assetdir="./tabletop/mesh" autolimits="true" /> -->
+    <option integrator="RK4" noslip_iterations="20" cone="elliptic" impratio="10" tolerance="1e-10" jacobian="sparse" solver="Newton" timestep="0.002" gravity="0 0 -9.81" />
+    <default>
+        <joint armature="0.1" damping="0.1" />
+        <default class="visual_only">
+            <geom type="mesh" contype="0" conaffinity="0" group="2" />
+        </default>
+        <default class="no_visual_collision">
+            <!-- visual group of 'collision' should be 3 to not render -->
+            <geom type="capsule" solimp=".9 .99 .001" solref=".015 1" group="3" />
+        </default>
+        <default class="visual_collision">
+            <geom type="mesh" solimp=".9 .99 .001" solref=".015 1" group="2" />
+        </default>
+    </default>
+    
+    <!-- Assets -->
+    <asset>
+        <!-- Materials for blocks -->
+        <material name="red_block" rgba="0.8 0.2 0.2 1.0" specular="0.5" shininess="0.5"/>
+        
+        <!-- Cube materials from objaverse -->
+        <texture type="2d" name="cube_red" file="objaverse/cube/assets/red.png"/>
+        <texture type="2d" name="cube_blue" file="objaverse/cube/assets/blue.png"/>
+        <texture type="2d" name="cube_green" file="objaverse/cube/assets/green.png"/>
+        <material name="cube_red_mat" texture="cube_red"/>
+        <material name="cube_blue_mat" texture="cube_blue"/>
+        <material name="cube_green_mat" texture="cube_green"/>
+        
+        <!-- Simplified cube mesh from objaverse -->
+        <mesh name="simple_cube" scale="1e-3 1e-3 1e-3"
+              vertex="8.075   9.5    -8.075  -8.075   9.5    -8.075   8.075   9.5     8.075
+                     -8.075   9.5     8.075  -9.5     8.075  -8.075  -9.5    -8.075  -8.075
+                     -9.5     8.075   8.075  -9.5    -8.075   8.075   8.075  -9.5    -8.075
+                      8.075  -9.5     8.075  -8.075  -9.5    -8.075  -8.075  -9.5     8.075
+                      9.5     8.075   8.075   9.5    -8.075   8.075   9.5     8.075  -8.075
+                      9.5    -8.075  -8.075   8.075   8.075   9.5    -8.075   8.075   9.5
+                      8.075  -8.075   9.5    -8.075  -8.075   9.5     8.075  -8.075  -9.5
+                     -8.075  -8.075  -9.5     8.075   8.075  -9.5    -8.075   8.075  -9.5"/>
+    </asset>
+    
+    <!-- Sky and floor -->
+    <include file="tabletop/object/floor_isaac_style.xml" />
+
+    <!-- Table -->
+    <include file="tabletop/object/object_table.xml" />
+    
+    <!-- UR52 -->
+   
+
+    <include file="so100_6dof/so100.xml" />
+    <include file="objaverse/plate_11/model_new.xml"/>
+    <!-- <include file="objaverse/mug_6/model_new.xml"/> -->
+    
+    <!-- Objects -->
+    <worldbody>
+        <!-- Red Block - Following reference cube style -->
+        <body name="body_obj_block_red" pos="0.32 0.1 0.83">
+            <freejoint name="block_red_joint" />
+            <inertial pos="0 0 0" mass="0.03" diaginertia="0.0000045 0.0000045 0.0000045" />
+            <geom name="block_red" 
+                  type="box" 
+                  size="0.015 0.015 0.015" 
+                  material="red_block" 
+                  friction="1.5 1.5 1.5" 
+                  condim="4" 
+                  priority="1"
+                  rgba="0.8 0.2 0.2 1" />
+            <site rgba="0 0 0 0" size="0.005" pos="0 0 -0.015" name="bottom_site_block_red" />
+            <site rgba="0 0 0 0" size="0.005" pos="0 0 0.015" name="top_site_block_red" />
+            <site rgba="0 0 0 0" size="0.005" pos="0.015 0 0" name="horizontal_radius_site_block_red" />
+        </body>
+        
+        <!-- Cube from objaverse - Following reference cube style -->
+        <body name="body_obj_cube" pos="0.35 0.05 0.83">
+            <freejoint name="cube_joint" />
+            <inertial pos="0 0 0" mass="0.03" diaginertia="0.0000045 0.0000045 0.0000045" />
+            <geom name="cube_geom" 
+                  type="mesh" 
+                  mesh="simple_cube" 
+                  material="cube_red_mat" 
+                  friction="1.5 1.5 1.5" 
+                  condim="4" 
+                  priority="1"
+                  euler="0 0 90"/>
+            <site rgba="0 0 0 0" size="0.005" pos="0 0 -0.0095" name="bottom_site_cube" />
+            <site rgba="0 0 0 0" size="0.005" pos="0 0 0.0095" name="top_site_cube" />
+            <site rgba="0 0 0 0" size="0.005" pos="0.0095 0 0" name="horizontal_radius_site_cube" />
+        </body>
+    </worldbody>
+
+    <include file="./objaverse/mug_5/model_new.xml"/>
+
+</mujoco>
