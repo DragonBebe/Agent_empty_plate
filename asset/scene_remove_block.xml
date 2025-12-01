@@ -38,7 +38,7 @@
     <!-- <include file="so100_6dof/so100.xml" /> -->
     <include file="./robotis_omy/omy.xml" />
     <include file="objaverse/plate_11/model_new.xml"/>
-    <include file="./objaverse/mug_6/model_new.xml"/>
+    <include file="object/t_block.xml" />
     <!-- <include file="./objaverse/mug_5/model_new.xml"/> -->
     <include file="./red_block.xml"/>
     
